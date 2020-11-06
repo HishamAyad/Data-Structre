@@ -7,55 +7,57 @@ struct node
     int val;
     node* next;
 };
-node* top =NULL;
+node* tail=NULL;
 node* createnode()
 {
-    node* newnode =new node();
-    puts("Enter the value you want to add");
+    puts("Please enter the value you want to add");
+    node* newnode=new node();
     cin>>newnode->val;
     newnode->next=NULL;
     return newnode;
 }
 
-node* push(node* stack,node* newnode)
+node* Enqueue(node* queue)
 {
-    if(stack==NULL)
+    node* newnode=createnode();
+    if(queue==NULL)
     {
-        stack=newnode;
+        queue=newnode;
+        tail=newnode;
     }
     else
     {
-        newnode->next=stack;
+        tail->next=newnode;
+        tail=tail->next;
     }
-    stack=newnode;
-    puts("(1) item is pushed");
-    return stack;
+    puts("(1) Item is added to the queue");
+    return queue;
 }
-node* pop (node* stack)
+node* Dequeue (node* queue)
 {
-    if(stack==NULL)
+    if(queue==NULL)
     {
-        puts("The stack is empty");
+        puts("The queue is empty");
     }
     else
     {
-        cout<<"Item with value "<<stack->val<<" is poped out from the stack"<<endl;
-        node*ptr=stack;
-        stack=stack->next;
+        node* ptr=queue;
+        cout<<"Item with value "<<queue->val<<" is removed out from the queue"<<endl;
+        queue=queue->next;
         delete(ptr);
     }
-    return stack;
+    return queue;
 }
-void print(node* stack)
+void print (node*queue)
 {
-    if(stack==NULL)
+    if(queue==NULL)
     {
-        puts("Stack is empty");
+        puts("The queue is empty");
     }
     else
     {
-        node*ptr=stack;
-        puts("The stack contains : ");
+        puts("The queue contains : ");
+        node*ptr=queue;
         while(ptr!=NULL)
         {
             cout<<ptr->val<<" ";
@@ -66,7 +68,7 @@ void print(node* stack)
 }
 int main()
 {
-    node* Mystack=NULL;
+    node* Myqueue=NULL;
     char c;
     while(true)
     {
@@ -75,16 +77,15 @@ int main()
         cin>>c;
         if(c=='a'||c=='A')
         {
-            node* newnode=createnode();
-            Mystack=push(Mystack,newnode);
+            Myqueue=Enqueue(Myqueue);
         }
         else if(c=='b'||c=='B')
         {
-            Mystack=pop(Mystack);
+            Myqueue=Dequeue(Myqueue);
         }
         else if(c=='p'||c=='P')
         {
-            print(Mystack);
+            print(Myqueue);
         }
         else if(c=='e'||c=='E')
         {
