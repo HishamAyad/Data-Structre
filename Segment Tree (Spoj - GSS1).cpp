@@ -27,8 +27,8 @@ void init(int ni=0,int ns=0,int ne=n-1)
         return ;
     }
     int lf = 2 * ni + 1, rt = lf +1, mid =  ns +  (ne - ns)/2;
-    init(rt,ns,mid);
-    init(lf,mid+1,ne);
+    init(lf,ns,mid);
+    init(rt,mid+1,ne);
     tree[ni]=merge(tree[rt],tree[lf]);
 }
 
@@ -37,7 +37,7 @@ node Query (int qs,int qe,int ni=0,int ns=0,int ne=n-1)
     if(ne < qs || ns>qe ) return {0,-(int)1e9,-(int)1e9,-(int)1e9};
     if(ns>=qs && ne<= qe) return tree[ni];
     int lf = 2 * ni + 1, rt = lf +1, mid =  ns +  (ne - ns)/2;
-    return merge(Query(qs,qe,rt,ns,mid), Query(qs,qe,lf,mid+1,ne));
+    return merge(Query(qs,qe,lf,ns,mid), Query(qs,qe,rt,mid+1,ne));
 }
 
 int main()
